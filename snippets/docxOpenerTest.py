@@ -3,17 +3,14 @@ import re
 
 # document = Document("Results list for_ UCLA-DOCX.DOCX")
 
-text = docx2txt.process("Results list for_ UCLA-DOCX.DOCX")
+lines = docx2txt.process("Results list for_ UCLA-DOCX.DOCX").split("\n")
 
-print(text)
-# for p in document.paragraphs:    
-#     # Remove some annoying things
-#     pText = p.text
-#     pText = pText.replace("...", "")
-#     pText = re.sub("\s+"," ",pText)
+for l in range(len(lines)):    
+    # Remove some annoying things
+    lines[l] = lines[l].replace("...", "") # Kill ellipses 
+    lines[l] = re.sub("\s+"," ",lines[l]) # Remove duplicate spaces
+    if (re.match("\s+", lines[l][0:1])): # Check for whitespace at beginning of string
+        lines[l] = lines[l][1:] # Return the string minus the first character (which is whitespace)
 
-#     text.append(pText)
-
-
-# for i in range(20):
-#     print(str(i) + ":  " + text[i])
+for i in range(100):
+    print(str(i) + ": " + lines[i])
